@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>عيادات عون</title>
+<meta name="description" content="عيادات عون: رعاية متخصصة لصحة المرأة في كل مراحل حياتها. كتاب مهد الأمان، الفروع والمواعيد، والحجز.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="عيادات عون">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#1C2541">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+/* Layout: a phone app — content column + fixed bottom tab bar (home, book, booking & branches, news). */
+:root {
+  --bg: #F4F5F9; --card: #FFFFFF; --ink: #1C2541; --muted: #5F6779; --line: #E2E5EE;
+  --navy: #1C2541; --navy-2: #27325A; --on-navy: #FFFFFF; --on-navy-muted: #B9C1D6;
+  --gold: #B48A4A; --gold-ink: #8A6630; --gold-soft: #F5EDDF;
+  --wa: #168A4F; --danger: #B3261E; --danger-soft: #FBE9E7; --focus: #3C66B0;
+  --font: -apple-system, "SF Arabic", system-ui, "Segoe UI", "Noto Sans Arabic", Tahoma, sans-serif;
+  --r: 16px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0F1424; --card: #182038; --ink: #E8EBF3; --muted: #A1A9BD; --line: #2A3352;
+    --navy: #1A2342; --navy-2: #26305A; --on-navy: #FFFFFF; --on-navy-muted: #AEB7CE;
+    --gold: #D2AE6E; --gold-ink: #E2C48C; --gold-soft: #2C2718;
+    --wa: #2FB36B; --danger: #F08A80; --danger-soft: #3A1E1E; --focus: #8DB0EE;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.6; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; touch-action: manipulation; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+svg.i { width: 22px; height: 22px; flex: none; }
+
+.view { max-width: 620px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) calc(96px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 16px; }
+.view > .band { margin: 0 calc(-1 * max(16px, env(safe-area-inset-right, 0px))) 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))); }
+.page-title { margin: calc(16px + env(safe-area-inset-top, 0px)) 0 0; font-size: 26px; font-weight: 800; }
+.page-sub { margin: -10px 0 0; color: var(--muted); font-size: 14px; }
+
+/* home hero */
+.hero { background: var(--navy); color: var(--on-navy); padding: calc(18px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 22px max(16px, env(safe-area-inset-left, 0px)); border-radius: 0 0 28px 28px; display: grid; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo { width: 64px; height: 64px; border-radius: 18px; background: #fff; display: grid; place-items: center; overflow: hidden; flex: none; }
+.brand .logo img { width: 92%; height: auto; }
+.brand h1 { margin: 0; font-size: 26px; font-weight: 800; line-height: 1.2; }
+.brand p { margin: 2px 0 0; color: var(--on-navy-muted); font-size: 13px; }
+.motto { color: #E3C690; font-weight: 700; font-size: 15px; }
+.doctor { display: flex; align-items: center; gap: 12px; background: var(--navy-2); border-radius: 18px; padding: 10px 12px; }
+.doctor img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 2px solid #E3C690; flex: none; }
+.doctor b { display: block; font-size: 16px; }
+.doctor span { font-size: 13px; color: var(--on-navy-muted); }
+
+/* cards & buttons */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; }
+.card h2 { margin: 0; font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card h2 small { font-size: 13px; font-weight: 500; color: var(--muted); }
+.card p { margin: 0; }
+.muted { color: var(--muted); font-size: 14px; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.tile { display: grid; gap: 6px; align-content: start; text-align: start; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; min-height: 104px; }
+.tile .ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--gold-soft); color: var(--gold-ink); }
+.tile b { font-size: 16px; line-height: 1.3; }
+.tile span { font-size: 13px; color: var(--muted); line-height: 1.4; }
+.tile.danger .ico { background: var(--danger-soft); color: var(--danger); }
+.tile.danger b { color: var(--danger); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); text-decoration: none; font-weight: 700; font-size: 15px; }
+.btn.primary { background: var(--navy); border-color: var(--navy); color: #fff; }
+.btn.wa { background: var(--wa); border-color: var(--wa); color: #fff; }
+.btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn.gold { background: var(--gold); border-color: var(--gold); color: #fff; }
+.btn.block { width: 100%; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.row > .btn { flex: 1 1 140px; }
+.banner { display: flex; align-items: center; gap: 12px; background: var(--gold-soft); border: 1px solid var(--line); border: 1px solid color-mix(in srgb, var(--gold) 35%, transparent); border-radius: var(--r); padding: 14px; text-decoration: none; }
+.banner .ico { width: 44px; height: 44px; border-radius: 50%; background: var(--gold); color: #fff; display: grid; place-items: center; flex: none; }
+.banner b { display: block; font-size: 16px; }
+.banner span { font-size: 13px; color: var(--muted); }
+.install { display: grid; gap: 8px; background: var(--card); border: 1.5px dashed var(--gold); border-radius: var(--r); padding: 14px; }
+.install b { font-size: 15px; }
+.services { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.services div { background: var(--bg); border-radius: 12px; padding: 10px 12px; font-size: 14px; font-weight: 600; display: flex; gap: 8px; align-items: center; }
+.services div::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex: none; }
+
+/* due date */
+.field { display: grid; gap: 6px; }
+.field > span { font-size: 13px; color: var(--muted); font-weight: 600; }
+.input { width: 100%; min-height: 48px; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 10px 12px; font-size: 16px; color: var(--ink); }
+input[type="date"].input { -webkit-appearance: none; appearance: none; text-align: start; }
+.due { display: grid; gap: 10px; background: var(--bg); border-radius: 12px; padding: 12px; }
+.due .big { font-size: 24px; font-weight: 800; color: var(--gold-ink); }
+.due .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center; }
+.due .stats div { background: var(--card); border-radius: 10px; padding: 8px 4px; }
+.due .stats b { display: block; font-size: 18px; }
+.due .stats span { font-size: 12px; color: var(--muted); }
+.note { font-size: 12.5px; color: var(--muted); margin: 0; }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--focus); font-weight: 700; font-size: 15px; text-align: start; }
+
+/* book */
+.cover { display: flex; gap: 14px; align-items: center; }
+.cover canvas, .cover .ph { width: 92px; aspect-ratio: 419.5 / 595.3; border-radius: 8px; object-fit: cover; flex: none; background: var(--gold-soft); box-shadow: 0 6px 16px rgba(28, 37, 65, .18); }
+.cover h2 { margin: 0; font-size: 21px; display: block; }
+.cover p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.dl { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.dl .bar { flex: 1; height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.dl .bar i { display: block; height: 100%; width: 0; background: var(--gold); }
+.search { position: relative; }
+.search svg { position: absolute; top: 50%; transform: translateY(-50%); inset-inline-start: 12px; color: var(--muted); pointer-events: none; }
+.search .input { padding-inline-start: 42px; background: var(--card); }
+.part { display: grid; gap: 4px; }
+.part-head { display: flex; align-items: baseline; gap: 10px; padding: 4px 2px; }
+.part-head b { font-size: 13px; color: var(--gold-ink); font-weight: 800; letter-spacing: .02em; white-space: nowrap; }
+.part-head span { font-size: 17px; font-weight: 800; }
+.topics { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.topic { display: flex; align-items: center; gap: 10px; width: 100%; text-align: start; background: none; border: 0; padding: 13px 14px; border-top: 1px solid var(--line); }
+.topic:first-child { border-top: 0; }
+.topic .t { flex: 1; min-width: 0; font-weight: 600; }
+.topic .t small { display: block; font-weight: 400; color: var(--muted); font-size: 12.5px; }
+.topic .pg { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.topic svg { color: var(--muted); width: 16px; height: 16px; }
+.topic.alert .t { color: var(--danger); }
+.empty { color: var(--muted); text-align: center; margin: 8px 0; }
+
+/* reader */
+.reader { position: fixed; inset: 0; background: var(--bg); z-index: 30; display: flex; flex-direction: column; }
+.rbar { display: flex; align-items: center; gap: 10px; background: var(--navy); color: #fff; padding: calc(8px + env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 10px max(12px, env(safe-area-inset-left, 0px)); }
+.rbar button { background: rgba(255,255,255,.12); border: 0; color: #fff; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; }
+.rbar .rt { flex: 1; min-width: 0; }
+.rbar .rt b { display: block; font-size: 16px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rbar .rt span { font-size: 12px; color: var(--on-navy-muted); }
+.rbody { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px max(8px, env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
+.pages { max-width: 760px; margin: 0 auto; display: grid; gap: 10px; }
+.pages canvas { width: 100%; height: auto; display: block; border-radius: 6px; background: var(--card); box-shadow: 0 2px 10px rgba(28,37,65,.12); }
+.pages canvas, .cover canvas, .reader { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+@media print { .reader, .cover canvas { display: none !important; } }
+.rnav { max-width: 760px; margin: 14px auto 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.rnav .btn { font-size: 14px; min-height: 52px; line-height: 1.3; }
+.rnav .btn span { display: block; font-weight: 500; font-size: 12px; opacity: .8; }
+.loading { text-align: center; color: var(--muted); padding: 40px 0; }
+
+/* clinics */
+.seg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--bg); border-radius: 12px; padding: 4px; gap: 4px; }
+.seg button { border: 0; background: none; border-radius: 9px; min-height: 42px; font-weight: 700; font-size: 14px; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+.branch .addr { display: flex; gap: 8px; align-items: flex-start; font-size: 15px; }
+.branch .addr svg { color: var(--gold); margin-top: 3px; }
+.hours { display: grid; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.hours div { display: flex; justify-content: space-between; gap: 10px; padding: 9px 12px; font-size: 14.5px; border-top: 1px solid var(--line); }
+.hours div:first-child { border-top: 0; }
+.hours div.today { background: var(--gold-soft); font-weight: 800; }
+.hours .badge { font-size: 11px; background: var(--gold); color: #fff; border-radius: 99px; padding: 1px 8px; margin-inline-start: 6px; font-weight: 700; }
+.hours .off { color: var(--danger); font-weight: 700; }
+.emergency { background: var(--danger-soft); border-color: transparent; }
+.emergency h2 { color: var(--danger); }
+.phone { font-size: 18px; font-weight: 800; letter-spacing: .02em; direction: ltr; unicode-bidi: isolate; }
+
+/* news */
+.post { padding: 0; overflow: hidden; gap: 0; }
+.post img { width: 100%; height: auto; display: block; background: var(--bg); }
+.post .pb { padding: 14px 16px 16px; display: grid; gap: 8px; }
+.post .meta { font-size: 12.5px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+.post .pin { background: var(--gold-soft); color: var(--gold-ink); border-radius: 99px; padding: 0 8px; font-weight: 700; }
+.post h3 { margin: 0; font-size: 17px; }
+.post p { white-space: pre-line; }
+
+/* bottom tab bar */
+.tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; background: var(--card); background: color-mix(in srgb, var(--card) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
+.tabbar nav { max-width: 620px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tabbar a { display: grid; justify-items: center; gap: 2px; padding: 6px 2px; text-decoration: none; color: var(--muted); font-size: 11.5px; font-weight: 600; border-radius: 12px; }
+.tabbar a[aria-current="page"] { color: var(--gold-ink); }
+.tabbar a[aria-current="page"] svg { color: var(--gold); }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(86px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: 14px; z-index: 40; max-width: calc(100% - 32px); text-align: center; }
+@media (prefers-reduced-motion: no-preference) { .toast { animation: rise .2s ease-out; } @keyframes rise { from { opacity: 0; transform: translate(-50%, 8px); } } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2zM12 6.5v14"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8.5 14h3M8.5 17h6"/></g></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14a1 1 0 0 0 1 1H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v10a1 1 0 0 1-2 0M8 9h5M8 13h5M8 16h3"/></g></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 3.5h3l1.5 4-2 1.3a11 11 0 0 0 5.7 5.7l1.3-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 3 5.5a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></g></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4M12 17h.01"/></g></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8S10.5 3.5 8 4.5 9.5 8 12 8zm0 0s1.5-4.5 4-3.5S14.5 8 12 8z"/></g></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5zm0 17.3a7.8 7.8 0 0 1-4-1.1l-.3-.2-2.8.8.8-2.7-.2-.3A7.8 7.8 0 1 1 12 19.8zm4.3-5.8c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.4 6.4 0 0 1-3.2-2.8c-.2-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 5 5 0 0 0 1 2.6 11.3 11.3 0 0 0 4.3 3.8c1.6.7 2.3.7 3.1.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.2-.2-.4-.3z"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4a21 21 0 0 0-2.3-.1c-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></g></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m14.5 6-6 6 6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9.5 6 6 6-6 6"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></symbol>
+    <symbol id="i-baby" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M9 10.5h.01M15 10.5h.01M9.5 15a3.5 3.5 0 0 0 5 0"/></g></symbol>
+  </defs>
+</svg>
+
+<!-- HOME -->
+<main class="view" id="v-home" data-view="home">
+  <section class="hero band" aria-label="عيادات عون">
+    <div class="brand">
+      <div class="logo"><img src="logo.webp" alt="شعار عيادات عون" width="600" height="550"></div>
+      <div>
+        <h1>عيادات عون</h1>
+        <p>رعاية متخصصة لصحة المرأة في كل مراحل حياتها</p>
+      </div>
+    </div>
+    <div class="motto">من أول نبضة… لأول خطوة</div>
+    <div class="doctor">
+      <img src="doctor.webp" alt="د. قاسم عبد الرؤوف عون" width="300" height="300">
+      <div><b id="docName"></b><span id="docTitle"></span></div>
+    </div>
+  </section>
+
+  <div class="install" id="installHint" hidden>
+    <b>ضيفي التطبيق على الشاشة الرئيسية</b>
+    <span class="muted" id="installText"></span>
+    <button class="btn gold" id="installBtn" type="button" hidden>ثبّتي التطبيق</button>
+  </div>
+
+  <div class="grid2">
+    <a class="tile" href="#clinics"><span class="ico"><svg class="i"><use href="#i-cal"/></svg></span><b>احجزي كشف</b><span>واتساب أو اتصال، والفروع والمواعيد</span></a>
+    <a class="tile danger" id="emTile" href="#"><span class="ico"><svg class="i"><use href="#i-phone"/></svg></span><b>الطوارئ 24 ساعة</b><span>اتصلي على طول</span></a>
+    <a class="tile" href="#book"><span class="ico"><svg class="i"><use href="#i-book"/></svg></span><b>كتاب «مهد الأمان»</b><span>من التخطيط للحمل لحد بعد الولادة</span></a>
+    <a class="tile danger" href="#danger"><span class="ico"><svg class="i"><use href="#i-alert"/></svg></span><b>إمتى أكلم الدكتور فورًا؟</b><span>علامات الخطر في الحمل وبعد الولادة</span></a>
+  </div>
+
+  <a class="banner" href="#news"><span class="ico"><svg class="i"><use href="#i-gift"/></svg></span><div><b>جمعتين كل شهر مجانًا لوجه الله</b><span>اعرفي التفاصيل في العروض والأخبار</span></div></a>
+
+  <section class="card" aria-label="حاسبة موعد الولادة">
+    <h2>حاسبة موعد الولادة <small>بتتحفظ على موبايلك بس</small></h2>
+    <label class="field"><span>أول يوم في آخر دورة شهرية</span><input class="input" id="lmp" type="date"></label>
+    <div class="due" id="dueBox" hidden>
+      <div><span class="muted">موعد الولادة المتوقع</span><div class="big num" id="dueDate"></div></div>
+      <div class="stats">
+        <div><b class="num" id="gaWeeks"></b><span>عمر الحمل</span></div>
+        <div><b id="trimester"></b><span>الثلث</span></div>
+        <div><b class="num" id="daysLeft"></b><span>يوم فاضل</span></div>
+      </div>
+      <button class="linkbtn" type="button" data-open="t23">اقري «الحمل شهرًا بشهر» في الكتاب ←</button>
+    </div>
+    <p class="note" id="dueMsg">الحساب تقريبي على أساس دورة منتظمة كل 28 يوم، والدكتور بيأكد الموعد بالسونار.</p>
+  </section>
+
+  <section class="card" aria-label="خدماتنا">
+    <h2>خدماتنا</h2>
+    <div class="services">
+      <div>متابعة الحمل والولادة</div>
+      <div>أمراض النساء والرعاية الشاملة</div>
+      <div>جراحات المناظير النسائية</div>
+      <div>الحقن المجهري وتأخر الإنجاب</div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="آخر الأخبار">
+    <h2>آخر الأخبار <a class="linkbtn" href="#news">كل الأخبار</a></h2>
+    <div id="homeNews"></div>
+  </section>
+
+  <div class="row">
+    <a class="btn" id="fbBtn" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-fb"/></svg>صفحتنا على فيسبوك</a>
+    <button class="btn" id="shareApp" type="button"><svg class="i"><use href="#i-share"/></svg>ابعتي التطبيق لصاحبتك</button>
+  </div>
+</main>
+
+<!-- BOOK -->
+<main class="view" id="v-book" data-view="book" hidden>
+  <h1 class="page-title">الكتاب</h1>
+  <section class="card">
+    <div class="cover">
+      <canvas id="coverImg" width="300" height="426" role="img" aria-label="غلاف كتاب مهد الأمان" hidden></canvas><div class="ph" id="coverPh"></div>
+      <div>
+        <h2>مهد الأمان <small class="muted">الجزء الأول</small></h2>
+        <p>دليلك العملي من التخطيط للحمل حتى أول سنة مع طفلك. إعداد د. قاسم عبد الرؤوف عون.</p>
+      </div>
+    </div>
+    <button class="btn primary block" id="resumeBtn" type="button" hidden></button>
+    <div class="dl" id="dlState"><span id="dlText">بيجهّز الكتاب للقراءة من غير نت…</span><span class="bar"><i id="dlBar"></i></span></div>
+  </section>
+  <label class="search"><svg class="i"><use href="#i-search"/></svg><input class="input" id="q" type="search" placeholder="دوّري في الكتاب… مثلاً: غثيان، حركة الجنين، قيصري" autocomplete="off"></label>
+  <div id="toc"></div>
+  <p class="note">الكتاب للتوعية والتثقيف الصحي، ومش بديل عن الكشف واستشارة طبيبك المعالج.</p>
+</main>
+
+<!-- CLINICS -->
+<main class="view" id="v-clinics" data-view="clinics" hidden>
+  <h1 class="page-title">الحجز والفروع</h1>
+  <section class="card" aria-label="احجزي كشف">
+    <h2>احجزي كشف</h2>
+    <p class="muted">اختاري الفرع، وابعتيلنا على واتساب أو اتصلي.</p>
+    <div class="seg" id="branchSeg"></div>
+    <a class="btn wa block" id="waBtn" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>احجزي على واتساب</a>
+    <div class="row" id="callRow"></div>
+  </section>
+  <div id="branches"></div>
+  <section class="card emergency" aria-label="الطوارئ">
+    <h2>الطوارئ 24 ساعة</h2>
+    <p>في أي وقت، بالاتصال على الهاتف:</p>
+    <div class="row" id="emRow"></div>
+  </section>
+  <a class="banner" href="#news"><span class="ico"><svg class="i"><use href="#i-gift"/></svg></span><div><b>جمعتين كل شهر مجانًا لوجه الله</b><span>اتصلي بينا عشان تعرفي المواعيد</span></div></a>
+</main>
+
+<!-- NEWS -->
+<main class="view" id="v-news" data-view="news" hidden>
+  <h1 class="page-title">العروض والأخبار</h1>
+  <p class="page-sub" id="newsSub"></p>
+  <div id="newsList" style="display:grid;gap:14px"></div>
+  <a class="btn block" id="fbBtn2" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-fb"/></svg>تابعينا على فيسبوك</a>
+</main>
+
+<!-- READER -->
+<div class="reader" id="reader" hidden role="dialog" aria-modal="true" aria-labelledby="rTitle">
+  <div class="rbar">
+    <button type="button" id="rClose" aria-label="رجوع للفهرس"><svg class="i"><use href="#i-back"/></svg></button>
+    <div class="rt"><b id="rTitle"></b><span id="rSub"></span></div>
+  </div>
+  <div class="rbody" id="rBody">
+    <div class="pages" id="rPages"></div>
+    <div class="rnav" id="rNav"></div>
+  </div>
+</div>
+
+<div class="tabbar"><nav aria-label="الأقسام">
+  <a href="#home" data-tab="home"><svg class="i"><use href="#i-home"/></svg>الرئيسية</a>
+  <a href="#book" data-tab="book"><svg class="i"><use href="#i-book"/></svg>الكتاب</a>
+  <a href="#clinics" data-tab="clinics"><svg class="i"><use href="#i-cal"/></svg>الحجز والفروع</a>
+  <a href="#news" data-tab="news"><svg class="i"><use href="#i-news"/></svg>العروض</a>
+</nav></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+  /* ===== Clinic details — edit here if anything changes ===== */
+  const CLINIC = {
+    doctor: "د. قاسم عبد الرؤوف عون",
+    title: "مدرس مساعد التوليد وأمراض النساء",
+    phones: ["01022014744", "01152154372"],
+    whatsapp: "201022014744",
+    facebook: "https://www.facebook.com/share/14vfbv2Aoc8/",
+    branches: [
+      { id: "nd", name: "دمياط الجديدة", address: "أمام مستشفى الأزهر، أعلى صيدلية د. عبده عبيد، دمياط الجديدة",
+        map: "https://maps.app.goo.gl/4yjexJwG39kRFdwx5",
+        hours: [[6, "6:00 م – 11:00 م"], [0, "6:00 م – 11:00 م"], [3, "6:00 م – 11:00 م"], [4, "6:00 م – 11:00 م"], [5, null]] },
+      { id: "ab", name: "العباسية", address: "أمام مركز الشباب وصيدلية العباسية الجديدة، أعلى حلواني رغدة، العباسية – كفر سعد، دمياط",
+        map: "https://maps.app.goo.gl/bVTv8yNV54HNZsY86",
+        hours: [[6, "3:00 م – 6:00 م"], [0, "3:00 م – 6:00 م"], [3, "3:00 م – 6:00 م"], [4, "3:00 م – 6:00 م"], [5, "3:00 م – 6:00 م"]] },
+    ],
+  };
+  /* ===== Book index (generated from the PDF) ===== */
+  const BOOK = {"cover":1,"s":[172,225,240,81,65,33,161,218,16,205,44,192,100,70,203,39,149,154,209,220,113,65,195,110,237,28,240,231,71],"parts":[{"title":"تمهيد","sub":"عن الكتاب وطريقة استخدامه","file":"book-0.bin","pages":[[1,0,154630,1100,1560],[80,154630,137544,1100,1560],[4,292174,93222,1100,1560],[6,385396,103376,1100,1560],[7,488772,104540,1100,1560],[8,593312,130018,1100,1560]]},{"title":"الباب الأول","sub":"قبل الحمل وبدايته","file":"book-1.bin","pages":[[9,0,110332,1100,1560],[10,110332,123594,1100,1560],[11,233926,110322,1100,1560],[12,344248,124346,1100,1560],[13,468594,103966,1100,1560],[14,572560,91442,1100,1560],[15,664002,78030,1100,1560],[16,742032,123616,1100,1560],[17,865648,99300,1100,1560],[18,964948,110388,1100,1560],[19,1075336,108840,1100,1560]]},{"title":"الباب الثاني","sub":"متابعة الحمل وتطوره","file":"book-2.bin","pages":[[20,0,111092,1100,1560],[21,111092,112600,1100,1560],[22,223692,102026,1100,1560],[23,325718,137544,1100,1560],[24,463262,91192,1100,1560],[25,554454,130794,1100,1560],[26,685248,61776,1100,1560],[27,747024,94406,1100,1560],[28,841430,92842,1100,1560],[29,934272,108420,1100,1560],[30,1042692,91408,1100,1560],[31,1134100,93344,1100,1560],[32,1227444,96586,1100,1560],[33,1324030,95392,1100,1560],[34,1419422,106198,1100,1560]]},{"title":"الباب الثالث","sub":"الحياة الصحية أثناء الحمل","file":"book-3.bin","pages":[[35,0,114662,1100,1560],[36,114662,91094,1100,1560],[37,205756,91126,1100,1560],[38,296882,87090,1100,1560],[39,383972,79402,1100,1560],[40,463374,100552,1100,1560],[41,563926,86152,1100,1560],[42,650078,95580,1100,1560],[43,745658,75076,1100,1560],[44,820734,107642,1100,1560],[45,928376,67480,1100,1560],[46,995856,93012,1100,1560],[47,1088868,56202,1100,1560],[48,1145070,74388,1100,1560],[49,1219458,93380,1100,1560],[50,1312838,94132,1100,1560],[51,1406970,93044,1100,1560]]},{"title":"الباب الرابع","sub":"الاستعداد للولادة","file":"book-4.bin","pages":[[52,0,114700,1100,1560],[53,114700,85830,1100,1560],[54,200530,65678,1100,1560],[55,266208,110174,1100,1560],[56,376382,97472,1100,1560],[57,473854,37606,1100,1560],[58,511460,126586,1100,1560],[59,638046,101982,1100,1560],[60,740028,77020,1100,1560],[61,817048,98648,1100,1560],[62,915696,103182,1100,1560],[63,1018878,107862,1100,1560]]},{"title":"الباب الخامس","sub":"المولود والنفاس","file":"book-5.bin","pages":[[64,0,116880,1100,1560],[65,116880,128574,1100,1560],[66,245454,119630,1100,1560],[67,365084,84688,1100,1560],[68,449772,78780,1100,1560],[69,528552,123370,1100,1560],[70,651922,116938,1100,1560],[71,768860,108504,1100,1560],[72,877364,114052,1100,1560],[73,991416,69384,1100,1560],[74,1060800,115000,1100,1560],[75,1175800,123056,1100,1560],[76,1298856,98298,1100,1560],[77,1397154,117694,1100,1560],[78,1514848,118576,1100,1560]]}],"topics":[{"id":"t01","part":0,"title":"عن الكتاب","pages":[1,80,4],"kw":"مقدمة تنبيه غلاف"},{"id":"t02","part":0,"title":"كلمة د. قاسم عون","pages":[6],"kw":"مقدمة كلمة الدكتور"},{"id":"t03","part":0,"title":"طريقة استخدام الكتاب وإرشادات الأمان","pages":[7,8],"kw":"إرشادات أمان استخدام"},{"id":"t11","part":1,"title":"التخطيط للحمل","pages":[9,10,11],"kw":"قبل الحمل تخطيط استعداد"},{"id":"t12","part":1,"title":"فحوصات وتحاليل ما قبل الحمل","pages":[12,13],"kw":"تحاليل تحليل فحوصات فحص"},{"id":"t13","part":1,"title":"الأدوية والتطعيمات قبل الحمل","pages":[14],"kw":"أدوية دواء تطعيم تطعيمات"},{"id":"t14","part":1,"title":"التبويض وتأخر الحمل","pages":[15],"kw":"تبويض تأخر إنجاب خصوبة"},{"id":"t15","part":1,"title":"اختبار الحمل الإيجابي","pages":[16,17],"kw":"اختبار تست تحليل حمل إيجابي"},{"id":"t16","part":1,"title":"أول زيارة للحمل","pages":[18,19],"kw":"أول كشف زيارة"},{"id":"t21","part":2,"title":"متابعة الحمل ومواعيد الزيارات","pages":[20,21,22],"kw":"مواعيد زيارات كشف متابعة"},{"id":"t22","part":2,"title":"أعراض أول الحمل","pages":[23,24],"kw":"أعراض علامات بداية الحمل"},{"id":"t23","part":2,"title":"الحمل شهرًا بشهر (الأول إلى التاسع)","pages":[25,26,27,28,29,30,31,32,33,34],"kw":"شهر شهور أسبوع أسابيع نمو الجنين"},{"id":"t31","part":3,"title":"التغذية والأطعمة الواجب تجنبها","pages":[35,36,37,38,39],"kw":"أكل تغذية أطعمة ممنوعات أكلات"},{"id":"t32","part":3,"title":"الغثيان والحموضة","pages":[40,41],"kw":"غثيان ترجيع قيء حموضة حرقان"},{"id":"t33","part":3,"title":"الحركة والجماع والسفر","pages":[42,43],"kw":"رياضة حركة جماع علاقة سفر"},{"id":"t34","part":3,"title":"الإمساك وآلام الظهر والنوم","pages":[44,45],"kw":"إمساك ظهر نوم ألم آلام"},{"id":"t35","part":3,"title":"الأدوية والتطعيمات أثناء الحمل","pages":[46,47,48],"kw":"أدوية دواء تطعيمات مسكن"},{"id":"t36","part":3,"title":"حركة الجنين","pages":[49],"kw":"حركة الجنين حركات ركل"},{"id":"t37","part":3,"title":"علامات الخطر أثناء الحمل","pages":[50,51],"kw":"خطر طوارئ إمتى أكلم الدكتور","alert":true},{"id":"t41","part":4,"title":"الاستعداد للولادة","pages":[52,53,54],"kw":"استعداد تحضير ولادة"},{"id":"t42","part":4,"title":"علامات بداية الولادة","pages":[55],"kw":"طلق علامات بداية ولادة"},{"id":"t43","part":4,"title":"متى أتحرك للمستشفى؟","pages":[56,57],"kw":"مستشفى إمتى أروح طلق"},{"id":"t44","part":4,"title":"تسكين ألم الولادة","pages":[58],"kw":"تسكين ألم إبرة ظهر بنج"},{"id":"t45","part":4,"title":"الولادة الطبيعية","pages":[59,60],"kw":"طبيعي ولادة طبيعية"},{"id":"t46","part":4,"title":"الولادة القيصرية","pages":[61,62],"kw":"قيصري قيصرية عملية"},{"id":"t47","part":4,"title":"شنطة الولادة","pages":[63],"kw":"شنطة حاجات المستشفى"},{"id":"t51","part":5,"title":"أول 24 ساعة بعد الولادة","pages":[64,65],"kw":"بعد الولادة أول يوم"},{"id":"t52","part":5,"title":"فحوص حديثي الولادة والعناية به","pages":[66,67,68],"kw":"مولود طفل بيبي رضيع فحوص عناية"},{"id":"t53","part":5,"title":"النفاس","pages":[69,70],"kw":"نفاس بعد الولادة"},{"id":"t54","part":5,"title":"متابعة الأم بعد الولادة","pages":[71],"kw":"متابعة كشف بعد الولادة"},{"id":"t55","part":5,"title":"العناية بالجرح والحركة","pages":[72,73],"kw":"جرح غرز خياطة حركة"},{"id":"t56","part":5,"title":"علامات الخطر بعد الولادة","pages":[74],"kw":"خطر طوارئ إمتى أكلم الدكتور بعد الولادة","alert":true},{"id":"t57","part":5,"title":"الصحة النفسية بعد الولادة","pages":[75,76],"kw":"نفسية اكتئاب حزن"},{"id":"t58","part":5,"title":"منع الحمل بعد الولادة","pages":[77,78],"kw":"منع الحمل وسائل"}]};
+
+  const DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+  const $ = (id) => document.getElementById(id);
+  const pad = (n) => String(n).padStart(2, "0");
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem("oun-" + k)); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem("oun-" + k, JSON.stringify(v)); } catch (e) {} },
+  };
+  let toastTimer;
+  function toast(msg) { const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2600); }
+  function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function icon(id) { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("class", "i"); const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", "#" + id); s.append(u); return s; }
+  const tel = (p) => "tel:+2" + p;
+
+  /* ---------- static clinic info ---------- */
+  $("docName").textContent = CLINIC.doctor; $("docTitle").textContent = CLINIC.title;
+  $("emTile").href = tel(CLINIC.phones[0]);
+  [$("fbBtn"), $("fbBtn2")].forEach((a) => { a.href = CLINIC.facebook; });
+
+  let branch = store.get("branch") || CLINIC.branches[0].id;
+  function renderBooking() {
+    const seg = $("branchSeg"); seg.textContent = "";
+    CLINIC.branches.forEach((b) => {
+      const btn = el("button", "", "فرع " + b.name); btn.type = "button"; btn.setAttribute("aria-pressed", String(b.id === branch));
+      btn.addEventListener("click", () => { branch = b.id; store.set("branch", branch); renderBooking(); });
+      seg.append(btn);
+    });
+    const b = CLINIC.branches.find((x) => x.id === branch) || CLINIC.branches[0];
+    const msg = "السلام عليكم، عايزة أحجز كشف في عيادات عون – فرع " + b.name + ".\nالاسم: \nاليوم المناسب: ";
+    $("waBtn").href = "https://wa.me/" + CLINIC.whatsapp + "?text=" + encodeURIComponent(msg);
+    const row = $("callRow"); row.textContent = "";
+    CLINIC.phones.forEach((p) => { const a = el("a", "btn"); a.href = tel(p); a.append(icon("i-phone"), el("span", "phone", p)); row.append(a); });
+  }
+  function renderBranches() {
+    const box = $("branches"); box.textContent = "";
+    const today = new Date().getDay();
+    CLINIC.branches.forEach((b) => {
+      const c = el("section", "card branch"); c.setAttribute("aria-label", "فرع " + b.name);
+      c.append(el("h2", "", "فرع " + b.name));
+      const addr = el("div", "addr"); addr.append(icon("i-pin"), el("span", "", b.address)); c.append(addr);
+      const hours = el("div", "hours");
+      b.hours.forEach(([d, h]) => {
+        const r = el("div", d === today ? "today" : ""); const dn = el("span", "", DAYS[d]); if (d === today) dn.append(el("span", "badge", "النهارده")); r.append(dn);
+        r.append(h ? el("span", "num", h) : el("span", "off", "إجازة")); hours.append(r);
+      });
+      c.append(el("span", "muted", "مواعيد العيادة"), hours);
+      const map = el("a", "btn primary block"); map.href = b.map; map.target = "_blank"; map.rel = "noopener";
+      map.append(icon("i-pin"), document.createTextNode("افتحي العنوان على الخريطة")); c.append(map);
+      box.append(c);
+    });
+    const em = $("emRow"); em.textContent = "";
+    CLINIC.phones.forEach((p) => { const a = el("a", "btn danger"); a.href = tel(p); a.append(icon("i-phone"), el("span", "phone", p)); em.append(a); });
+  }
+
+  /* ---------- due-date calculator ---------- */
+  function parseISO(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
+  function iso(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function dmy(d) { return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear(); }
+  function renderDue() {
+    const v = $("lmp").value, box = $("dueBox"), msg = $("dueMsg");
+    const base = "الحساب تقريبي على أساس دورة منتظمة كل 28 يوم، والدكتور بيأكد الموعد بالسونار.";
+    if (!v) { box.hidden = true; msg.textContent = base; return; }
+    const lmp = parseISO(v), now = new Date(); now.setHours(0, 0, 0, 0);
+    const days = Math.round((now - lmp) / 86400000);
+    if (days < 0) { box.hidden = true; msg.textContent = "التاريخ ده لسه ما جاش. اختاري أول يوم في آخر دورة فاتت."; return; }
+    if (days > 300) { box.hidden = true; msg.textContent = "التاريخ ده من أكتر من 10 شهور. اتأكدي من التاريخ."; return; }
+    const due = new Date(lmp); due.setDate(due.getDate() + 280);
+    const w = Math.floor(days / 7), d = days % 7;
+    $("dueDate").textContent = DAYS[due.getDay()] + " " + dmy(due);
+    $("gaWeeks").textContent = w + " أسبوع" + (d ? " و" + d + " يوم" : "");
+    $("trimester").textContent = w < 14 ? "الأول" : w < 28 ? "التاني" : "التالت";
+    $("daysLeft").textContent = Math.max(0, 280 - days);
+    box.hidden = false; msg.textContent = base;
+  }
+  $("lmp").max = iso(new Date());
+  $("lmp").value = store.get("lmp") || "";
+  $("lmp").addEventListener("change", () => { store.set("lmp", $("lmp").value || null); renderDue(); });
+
+  /* ---------- book ---------- */
+  const norm = (s) => String(s).replace(/[ً-ْـ]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").replace(/ؤ/g, "و").replace(/ئ/g, "ي").toLowerCase();
+  const topicById = Object.fromEntries(BOOK.topics.map((t, i) => [t.id, Object.assign(t, { idx: i })]));
+  const partBlobs = {};
+  const partLoads = {};
+  function loadPart(pi) {
+    if (partBlobs[pi]) return Promise.resolve(partBlobs[pi]);
+    if (partLoads[pi]) return partLoads[pi];
+    const part = BOOK.parts[pi];
+    partLoads[pi] = fetch(part.file).then((r) => { if (!r.ok) throw new Error("http " + r.status); return r.arrayBuffer(); }).then((ab) => {
+      const buf = new Uint8Array(ab), k = BOOK.s;
+      for (let i = 0; i < buf.length; i++) buf[i] ^= k[i % k.length];
+      const pages = {};
+      for (const [pg, o, l, w, h] of part.pages) pages[pg] = { blob: new Blob([buf.subarray(o, o + l)], { type: "image/webp" }), w, h };
+      partBlobs[pi] = pages; return pages;
+    }).catch((e) => { delete partLoads[pi]; throw e; });
+    return partLoads[pi];
+  }
+  /* Pages are painted onto a canvas: no image file to long-press and save. */
+  function drawPage(c, blob) {
+    if (c.dataset.drawn) return; c.dataset.drawn = "1";
+    const ctx = c.getContext("2d");
+    const paint = (src) => ctx.drawImage(src, 0, 0, c.width, c.height);
+    const fallback = () => { const u = URL.createObjectURL(blob); const im = new Image(); im.onload = () => { paint(im); URL.revokeObjectURL(u); }; im.onerror = () => URL.revokeObjectURL(u); im.src = u; };
+    if (window.createImageBitmap) createImageBitmap(blob).then((bmp) => { paint(bmp); if (bmp.close) bmp.close(); }, fallback);
+    else fallback();
+  }
+  ["contextmenu", "dragstart", "selectstart"].forEach((ev) => document.addEventListener(ev, (e) => { if (e.target.closest && e.target.closest(".reader, .cover")) e.preventDefault(); }));
+  function topicRow(t) {
+    const b = el("button", "topic" + (t.alert ? " alert" : "")); b.type = "button"; b.dataset.open = t.id;
+    const tt = el("span", "t", t.title);
+    if (t.showPart) tt.append(el("small", "", BOOK.parts[t.part].title + " · " + BOOK.parts[t.part].sub));
+    b.append(tt, el("span", "pg", t.pages.length + (t.pages.length === 1 ? " صفحة" : " صفحات")), icon("i-chev"));
+    return b;
+  }
+  function renderToc() {
+    const box = $("toc"); box.textContent = "";
+    const q = norm($("q").value.trim());
+    if (q) {
+      const words = q.split(/\s+/);
+      const hits = BOOK.topics.filter((t) => { const hay = norm(t.title + " " + (t.kw || "") + " " + BOOK.parts[t.part].sub); return words.every((w) => hay.includes(w)); });
+      if (!hits.length) { box.append(el("p", "empty", "مفيش موضوع بالاسم ده. جرّبي كلمة تانية، أو تصفّحي الفهرس.")); return; }
+      const list = el("div", "topics"); hits.forEach((t) => list.append(topicRow(Object.assign({}, t, { showPart: true })))); box.append(list); return;
+    }
+    const wrap = el("div", ""); wrap.style.display = "grid"; wrap.style.gap = "16px";
+    BOOK.parts.forEach((p, pi) => {
+      const sec = el("section", "part"); const head = el("div", "part-head"); head.append(el("b", "", p.title), el("span", "", p.sub)); sec.append(head);
+      const list = el("div", "topics"); BOOK.topics.filter((t) => t.part === pi).forEach((t) => list.append(topicRow(t))); sec.append(list); wrap.append(sec);
+    });
+    box.append(wrap);
+  }
+  $("q").addEventListener("input", renderToc);
+
+  let reading = null, pageObserver = null, drawObserver = null;
+  function openTopic(id, startPage) {
+    const t = topicById[id]; if (!t) return;
+    reading = t;
+    const part = BOOK.parts[t.part];
+    $("rTitle").textContent = t.title; $("rSub").textContent = part.title + " · " + part.sub;
+    const pagesBox = $("rPages"); pagesBox.textContent = ""; pagesBox.append(el("p", "loading", "بيفتح الصفحات…"));
+    $("rNav").textContent = "";
+    $("reader").hidden = false; document.body.style.overflow = "hidden"; $("rBody").scrollTop = 0;
+    store.set("last", { id: t.id, page: startPage || 0 });
+    loadPart(t.part).then((pagesData) => {
+      if (reading !== t) return;
+      pagesBox.textContent = "";
+      pagesBox.append(el("p", "note", "لو الكلام صغير، كبّري الصفحة بصباعين."));
+      t.pages.forEach((pg, i) => {
+        const d = pagesData[pg], c = el("canvas"); c.width = d.w; c.height = d.h; c.dataset.i = i; c.dataset.pg = pg;
+        c.setAttribute("role", "img"); c.setAttribute("aria-label", t.title + " – صفحة " + (i + 1) + " من " + t.pages.length);
+        pagesBox.append(c);
+      });
+      if (drawObserver) drawObserver.disconnect();
+      drawObserver = new IntersectionObserver((ents) => { ents.forEach((en) => { if (en.isIntersecting) { drawPage(en.target, pagesData[en.target.dataset.pg].blob); drawObserver.unobserve(en.target); } }); }, { root: $("rBody"), rootMargin: "1200px 0px" });
+      pagesBox.querySelectorAll("canvas").forEach((c) => drawObserver.observe(c));
+      if (pageObserver) pageObserver.disconnect();
+      pageObserver = new IntersectionObserver((ents) => { ents.forEach((en) => { if (en.isIntersecting) store.set("last", { id: t.id, page: Number(en.target.dataset.i) }); }); }, { root: $("rBody"), threshold: 0.5 });
+      pagesBox.querySelectorAll("canvas").forEach((c) => pageObserver.observe(c));
+      if (startPage) { const target = pagesBox.querySelector('canvas[data-i="' + startPage + '"]'); if (target) requestAnimationFrame(() => target.scrollIntoView()); }
+      const nav = $("rNav");
+      const prev = BOOK.topics[t.idx - 1], next = BOOK.topics[t.idx + 1];
+      const mk = (tp, label, cls) => { const b = el("button", "btn " + cls); b.type = "button"; b.dataset.open = tp.id; const s = el("div"); s.append(el("span", "", label), document.createTextNode(tp.title)); b.append(s); return b; };
+      nav.append(prev ? mk(prev, "الموضوع اللي فات", "") : el("span"), next ? mk(next, "الموضوع اللي بعده", "primary") : el("span"));
+    }).catch(() => {
+      pagesBox.textContent = "";
+      pagesBox.append(el("p", "loading", "الصفحات دي محتاجة نت أول مرة بس. اتصلي بالنت وجرّبي تاني، وبعد كده هتفتح من غير نت."));
+    });
+  }
+  function closeReader() { $("reader").hidden = true; document.body.style.overflow = ""; reading = null; if (pageObserver) pageObserver.disconnect(); if (drawObserver) drawObserver.disconnect(); $("rPages").textContent = ""; renderResume(); }
+  $("rClose").addEventListener("click", () => { if (location.hash.startsWith("#read/") && history.length > 1) history.back(); else { location.hash = "#book"; closeReader(); } });
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-open]"); if (!b) return;
+    e.preventDefault(); location.hash = "#read/" + b.dataset.open;
+  });
+  function renderResume() {
+    const last = store.get("last"), btn = $("resumeBtn");
+    const t = last && topicById[last.id];
+    if (!t) { btn.hidden = true; return; }
+    btn.hidden = false; btn.textContent = "كمّلي القراية: " + t.title;
+    btn.onclick = () => { location.hash = "#read/" + t.id + "/" + (last.page || 0); };
+  }
+
+  /* make every part available offline in the background */
+  async function prefetchBook() {
+    const files = BOOK.parts.map((p) => p.file);
+    let done = 0;
+    const update = () => {
+      $("dlBar").style.width = Math.round((done / files.length) * 100) + "%";
+      if (done === files.length) { $("dlText").textContent = "الكتاب كله جاهز للقراءة من غير نت ✓"; $("dlState").querySelector(".bar").hidden = true; }
+      else $("dlText").textContent = "بيجهّز الكتاب للقراءة من غير نت: " + done + " من " + files.length;
+    };
+    const cached = async (f) => { try { return !!(window.caches && (await caches.match(f))); } catch (e) { return false; } };
+    for (const f of files) {
+      if (await cached(f)) { done++; update(); continue; }
+      if (!navigator.onLine) break;
+      try { const r = await fetch(f); if (r.ok) { await r.arrayBuffer(); done++; } } catch (e) { break; }
+      update();
+    }
+    update();
+    if (done < files.length && !navigator.onLine) $("dlText").textContent = "اتصلي بالنت مرة عشان الكتاب كله يتحمّل (" + done + " من " + files.length + ")";
+  }
+
+  /* cover thumbnail from part 0 */
+  loadPart(0).then((pagesData) => { const c = $("coverImg"); drawPage(c, pagesData[BOOK.cover].blob); c.hidden = false; $("coverPh").hidden = true; }).catch(() => {});
+
+  /* ---------- news ---------- */
+  function renderNews(items, fromCache) {
+    items = (Array.isArray(items) ? items : []).filter((n) => n && n.title).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || String(b.date || "").localeCompare(String(a.date || "")));
+    const list = $("newsList"), home = $("homeNews"); list.textContent = ""; home.textContent = "";
+    if (!items.length) { list.append(el("p", "empty", "مفيش أخبار دلوقتي.")); home.append(el("p", "muted", "مفيش أخبار دلوقتي.")); return; }
+    items.forEach((n, i) => {
+      const card = el("article", "card post");
+      if (n.image) { const im = el("img"); im.src = n.image; im.alt = n.title; im.loading = "lazy"; card.append(im); }
+      const pb = el("div", "pb"); const meta = el("div", "meta");
+      if (n.pinned) meta.append(el("span", "pin", "مثبّت"));
+      if (n.date) { const d = parseISO(n.date); if (!isNaN(d)) meta.append(el("span", "num", dmy(d))); }
+      pb.append(meta, el("h3", "", n.title)); if (n.text) pb.append(el("p", "", n.text));
+      if (n.action === "book") { const b = el("a", "btn primary"); b.href = "#book"; b.textContent = "افتحي الكتاب"; pb.append(b); }
+      else if (n.action === "booking") { const b = el("a", "btn primary"); b.href = "#clinics"; b.textContent = "احجزي دلوقتي"; pb.append(b); }
+      if (n.link) { const a = el("a", "btn"); a.href = n.link; a.target = "_blank"; a.rel = "noopener"; a.textContent = n.linkText || "اعرفي أكتر"; pb.append(a); }
+      card.append(pb); list.append(card);
+      if (i < 2) { const h = el("a", "banner"); h.href = "#news"; h.style.background = "var(--bg)"; h.style.border = "0"; const d = el("div"); d.append(el("b", "", n.title)); if (n.text) d.append(el("span", "", n.text.length > 90 ? n.text.slice(0, 90) + "…" : n.text)); h.append(d); home.append(h); }
+    });
+    home.style.display = "grid"; home.style.gap = "8px";
+    $("newsSub").textContent = fromCache ? "آخر أخبار اتحملت. لما تتصلي بالنت هتظهر الأحدث." : "";
+  }
+  function loadNews() {
+    fetch("news.json", { cache: "no-cache" }).then((r) => r.ok ? r.json() : Promise.reject())
+      .then((items) => { store.set("news", items); renderNews(items, false); })
+      .catch(() => { renderNews(store.get("news") || [], true); });
+  }
+
+  /* ---------- install hint & sharing ---------- */
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  let deferredPrompt = null;
+  if (!standalone) {
+    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    $("installText").textContent = ios ? "من Safari دوسي على زرار المشاركة، واختاري «إضافة إلى الشاشة الرئيسية». هيفتح بعد كده من غير نت." : "من قايمة المتصفح اختاري «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».";
+    $("installHint").hidden = false;
+  }
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferredPrompt = e; $("installBtn").hidden = false; });
+  $("installBtn").addEventListener("click", async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); try { await deferredPrompt.userChoice; } catch (e) {} deferredPrompt = null; $("installBtn").hidden = true; });
+  $("shareApp").addEventListener("click", () => {
+    const url = location.href.split("#")[0];
+    const text = "تطبيق عيادات عون: كتاب «مهد الأمان» ومواعيد الفروع والحجز";
+    if (navigator.share) { navigator.share({ title: "عيادات عون", text, url }).catch(() => {}); return; }
+    try { navigator.clipboard.writeText(url).then(() => toast("اتنسخ لينك التطبيق"), () => toast(url)); } catch (e) { toast(url); }
+  });
+
+  /* ---------- routing ---------- */
+  const views = ["home", "book", "clinics", "news"];
+  function route() {
+    const h = location.hash.replace(/^#/, "") || "home";
+    if (h.startsWith("read/")) { const [, id, pg] = h.split("/"); showView("book"); openTopic(id, Number(pg) || 0); return; }
+    if (!$("reader").hidden) closeReader();
+    if (h === "danger") { showView("book"); $("q").value = "خطر"; renderToc(); window.scrollTo(0, 0); return; }
+    showView(views.includes(h) ? h : "home");
+  }
+  function showView(name) {
+    views.forEach((v) => { $("v-" + v).hidden = v !== name; });
+    document.querySelectorAll(".tabbar a").forEach((a) => { if (a.dataset.tab === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (name !== "book" && $("q").value === "خطر") { $("q").value = ""; renderToc(); }
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+
+  /* ---------- start ---------- */
+  renderBooking(); renderBranches(); renderDue(); renderToc(); renderResume(); loadNews(); route();
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").then(() => navigator.serviceWorker.ready).then(prefetchBook).catch(prefetchBook);
+    });
+  } else { prefetchBook(); }
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+})();
+</script>
+</body>
+</html>
